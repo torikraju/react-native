@@ -7,16 +7,11 @@
  */
 
 import React, {Component} from 'react';
-import {Button, Platform, StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import PlaceInput from './src/component/PlaceInput/PlaceInput';
 import PlaceList from './src/component/PlaceList/PlaceList';
+import placeImage from './src/assets/beautiful-place.jpg';
 
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-    android:
-        'Double tap R on your keyboard to reload,\n' +
-        'Shake or press menu button for dev menu',
-});
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -27,7 +22,11 @@ export default class App extends Component<Props> {
     placeAddedHandler = placeName => {
         this.setState(prevState => {
             return {
-                places: prevState.places.concat({key: Math.random(), value: placeName})
+                places: prevState.places.concat({
+                    key: Math.random(),
+                    name: placeName,
+                    image: placeImage
+                })
             };
         });
     };
