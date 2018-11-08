@@ -1,16 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
+
 import PlaceInput from './src/component/PlaceInput/PlaceInput';
 import PlaceList from './src/component/PlaceList/PlaceList';
-import placeImage from './src/assets/beautiful-place.jpg';
+
 
 
 type Props = {};
@@ -25,7 +18,9 @@ export default class App extends Component<Props> {
                 places: prevState.places.concat({
                     key: Math.random(),
                     name: placeName,
-                    image: placeImage
+                    image: {
+                        uri:'http://offroadbangladesh.com/wp-content/uploads/2015/02/Amiakum-waterfall-626x365.jpg'
+                    }
                 })
             };
         });
