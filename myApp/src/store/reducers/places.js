@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 places: state.places.concat({
-                    key: Math.random(),
+                    key: Math.random().toString(36).substr(2, 9),
                     name: action.placeName,
                     image: {
                         uri: 'http://offroadbangladesh.com/wp-content/uploads/2015/02/Amiakum-waterfall-626x365.jpg'
