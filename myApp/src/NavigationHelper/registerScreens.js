@@ -9,5 +9,5 @@ export function registerScreens() {
     Navigation.registerComponentWithRedux('Login', () => require('../screens/Auth/auth').default, Provider, store);
     Navigation.registerComponentWithRedux('FindPlace', () => require('../screens/FindPlace/FindPlace').default, Provider, store);
     Navigation.registerComponentWithRedux('SharePlace', () => require('../screens/SharePlace/SharePlace').default, Provider, store);
-    Navigation.registerComponent('PlaceDetails', () => require('../screens/PlaceDetail/PlaceDetail').default);
+    Navigation.registerComponentWithRedux('PlaceDetails', () => require('../screens/PlaceDetail/PlaceDetail').default, Provider, store);
 }
