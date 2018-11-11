@@ -61,11 +61,10 @@ export const goToBothPlace = () => {
                                     }
                                 ]
                             }
-
                         }
                     ]
                 }
             }
         });
     });
-}
+};

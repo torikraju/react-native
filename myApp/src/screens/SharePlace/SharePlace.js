@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux'
 
-import PlaceInput from '../component/PlaceInput/PlaceInput';
-import * as actions from '../store/actions/index';
+import PlaceInput from '../../component/PlaceInput/PlaceInput';
+import * as actions from '../../store/actions/index';
 
 
 class SharePlaceScreen extends Component {

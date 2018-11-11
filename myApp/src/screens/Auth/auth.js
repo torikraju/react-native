@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-import { goToFindPlace, goToBothPlace } from '../navigation';
+import { goToFindPlace, goToBothPlace } from '../../NavigationHelper/navigation';
 
 class AuthScreen extends Component {
 
