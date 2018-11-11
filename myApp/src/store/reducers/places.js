@@ -27,18 +27,6 @@ const reducer = (state = initialState, action) => {
                 }),
                 selectedPlace: null
             };
-        case actionTypes.SELECT_PLACE:
-            return {
-                ...state,
-                selectedPlace: state.places.find(place => {
-                    return place.key === action.placeKey;
-                })
-            };
-        case actionTypes.DESELECT_PLACE:
-            return {
-                ...state,
-                selectedPlace: null
-            };
         default:
             return state;
     }
