@@ -1,7 +1,12 @@
 import { Navigation } from 'react-native-navigation';
+import { Provider } from 'react-redux';
+
+import configureStore from '../store/configureStore';
+
+const store = configureStore();
 
 export function registerScreens() {
-    Navigation.registerComponent('Login', () => require('./Auth/auth').default);
-    Navigation.registerComponent('FindPlace', () => require('./FindPlace').default);
-    Navigation.registerComponent('SharePlace', () => require('./SharePlace').default);
+    Navigation.registerComponentWithRedux('Login', () => require('./Auth/auth').default, Provider, store);
+    Navigation.registerComponentWithRedux('FindPlace', () => require('./FindPlace').default, Provider, store);
+    Navigation.registerComponentWithRedux('SharePlace', () => require('./SharePlace').default, Provider, store);
 };
