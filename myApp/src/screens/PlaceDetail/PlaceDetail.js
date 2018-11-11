@@ -35,7 +35,6 @@ class PlaceDetail extends Component {
 const styles = StyleSheet.create({
     container: {
         margin: 22
-
     },
     placeImage: {
         width: "100%",
