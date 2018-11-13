@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, Button, StyleSheet} from 'react-native';
 
-import { goToFindPlace, goToBothPlace } from '../../NavigationHelper/navigation';
+import {goToFindPlace, goToBothPlace} from '../../Helper/navigation';
 
 class AuthScreen extends Component {
 
     loginHandler = () => {
-        goToFindPlace();
+        //goToFindPlace();
         goToBothPlace();
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Button title='Login' onPress={this.loginHandler} />
+                <Button title='Login' onPress={this.loginHandler}/>
             </View>
         );
     }
@@ -37,5 +37,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+
 
 export default AuthScreen;

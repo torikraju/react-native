@@ -1,6 +1,6 @@
 import { Navigation } from 'react-native-navigation';
 
-import { registerScreens } from './src/NavigationHelper/registerScreens';
+import { registerScreens } from './src/Helper/registerScreens';
 
 
 registerScreens();
@@ -13,6 +13,7 @@ Navigation.events().registerAppLaunchedListener(() => {
                     {
                         component: {
                             name: 'Login',
+                            id:'login',
                             options: {
                                 topBar: {
                                     title: {

@@ -1,22 +1,24 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {View, Text} from 'react-native';
+import {connect} from 'react-redux'
 
 import PlaceInput from '../../component/PlaceInput/PlaceInput';
 import * as actions from '../../store/actions/index';
+import * as identifier from "../../Helper/identifires";
+import {iconsMap} from '../../Helper/iconHelper';
 
 
 class SharePlaceScreen extends Component {
     static get options() {
         return {
             topBar: {
-                backButton: {
-                    title: 'Back',
-                    visible: true,
-                    showTitle: true
+                leftButtons: {
+                    id: identifier.SIDE_DRAWER_BUTTON_ID,
+                    icon: iconsMap[identifier.SIDE_DRAWER_ICON]
+
                 },
                 title: {
-                    text: 'Search Place',
+                    text: 'Find Place',
                     alignment: 'center'
                 }
             }
@@ -30,12 +32,11 @@ class SharePlaceScreen extends Component {
     render() {
         return (
             <View>
-                <PlaceInput onPlaceAdded={this.placeAddedHandler} />
+                <PlaceInput onPlaceAdded={this.placeAddedHandler}/>
             </View>
         );
     }
 }
-
 
 
 const mapDispatchToProps = dispatch => {
