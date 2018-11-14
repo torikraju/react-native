@@ -23,3 +23,8 @@ export const ICONS = {
     trash: Platform.OS === 'android' ? 'md-trash' : 'ios-trash'
 };
 
+export const DIMENSIONS = {
+    portrait: 'portrait',
+    landscape: 'landscape',
+    height: 500
+};
