@@ -2,6 +2,7 @@ import React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 
 import ListItem from '../ListItem/ListItem';
+import {styles} from './PlaceList.style';
 
 const placeList = props => {
 
@@ -20,10 +21,5 @@ const placeList = props => {
     );
 };
 
-const styles = StyleSheet.create({
-    listContainer: {
-        width: "100%"
-    }
-});
 
 export default placeList;
