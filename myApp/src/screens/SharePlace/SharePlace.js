@@ -8,10 +8,10 @@ import * as identifier from "../../Helper/identifires";
 import {iconsMap} from '../../Helper/iconHelper';
 import {NAVIGATION_IDENTIFIER} from '../../Helper/identifires';
 import {styles} from './SharePlace.style';
-import DefaultInput from '../../component/UI/DefaultInput/DefaultInput';
 import MainText from '../../component/UI/MainText/MainText';
 import HeadingText from '../../component/UI/HeadingText/HeadingText';
-import imagePlaceHolder from '../../assets/beautiful-place.jpg';
+import PickImage from "../../component/PickImage/PickImage";
+import PickLocation from "../../component/PickLocation/PickLocation";
 
 
 class SharePlaceScreen extends Component {
@@ -39,22 +39,15 @@ class SharePlaceScreen extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <MainText><HeadingText>Share a place with us!</HeadingText></MainText>
-                    <View style={styles.placeholder}>
-                        <Image source={imagePlaceHolder} style={styles.imagePreview}/>
-                    </View>
+                    <MainText>
+                        <HeadingText>Share a place with us!</HeadingText>
+                    </MainText>
+                    <PickImage/>
+                    <PickLocation/>
+                    <PlaceInput/>
                     <View style={styles.button}>
-                        <Button title='Pick Image'/>
+                        <Button title='Share the Place' onPress={() => alert('pressed')}/>
                     </View>
-                    <View style={styles.placeholder}><Text>Map</Text></View>
-                    <View style={styles.button}>
-                        <Button title='Locate Me'/>
-                    </View>
-                    <DefaultInput placeholder='Place Name'/>
-                    <View style={styles.button}>
-                        <Button title='Share the Place'/>
-                    </View>
-                    {/*<PlaceInput onPlaceAdded={this.placeAddedHandler}/>*/}
                 </View>
             </ScrollView>
         );
