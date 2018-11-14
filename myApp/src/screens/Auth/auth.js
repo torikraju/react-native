@@ -18,9 +18,9 @@ class AuthScreen extends Component {
                 <Text>Please Log In</Text>
                 <Button title='Switch to Login'/>
                 <View style={styles.inputContainer}>
-                    <DefaultInput placeholder='Your E-Mail Address'/>
-                    <DefaultInput placeholder='Password'/>
-                    <DefaultInput placeholder='Confirm Password'/>
+                    <DefaultInput placeholder='Your E-Mail Address' style={styles.input}/>
+                    <DefaultInput placeholder='Password' style={styles.input}/>
+                    <DefaultInput placeholder='Confirm Password' style={styles.input}/>
                 </View>
                 <Button title='Login' onPress={this.loginHandler}/>
             </View>

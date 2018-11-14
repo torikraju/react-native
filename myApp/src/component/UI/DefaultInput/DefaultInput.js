@@ -5,8 +5,8 @@ import {styles} from "./DefaultInput.style";
 const DefaultInput = props => {
     return (
         <TextInput
-            style={styles.input}
             {...props}
+            style={[styles.input, props.style]}
         />
     );
 };

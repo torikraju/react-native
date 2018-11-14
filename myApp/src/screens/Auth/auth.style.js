@@ -9,5 +9,9 @@ export const styles = StyleSheet.create({
     },
     inputContainer: {
         width: '80%'
+    },
+    input: {
+        backgroundColor: '#eee',
+        borderColor: '#bbb'
     }
 });
