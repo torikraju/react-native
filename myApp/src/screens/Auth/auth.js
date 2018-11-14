@@ -4,6 +4,7 @@ import {View, Text, Button, TextInput} from 'react-native';
 import {goToBothPlace} from '../../Helper/navigation';
 import {styles} from './auth.style';
 import DefaultInput from '../../component/UI/DefaultInput/DefaultInput';
+import HeadingText from '../../component/UI/HeadingText/HeadingText';
 
 
 class AuthScreen extends Component {
@@ -15,7 +16,7 @@ class AuthScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Please Log In</Text>
+                <HeadingText>Please Log In</HeadingText>
                 <Button title='Switch to Login'/>
                 <View style={styles.inputContainer}>
                     <DefaultInput placeholder='Your E-Mail Address' style={styles.input}/>
