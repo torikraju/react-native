@@ -1,7 +1,7 @@
 import {Navigation} from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import * as identifire from './/identifires';
+import {NAVIGATION_IDENTIFIER, SCREEN_NAMES} from './identifires';
 
 export const goToFindPlace = () => Navigation.setRoot({
     root: {
@@ -28,20 +28,20 @@ export const goToBothPlace = () => {
                 sideMenu: {
                     left: {
                         component: {
-                            name: 'SideDrawer',
-                            id: identifire.SIDE_DRAWER_ID
+                            name: SCREEN_NAMES.SideDrawer,
+                            id: NAVIGATION_IDENTIFIER.SIDE_DRAWER_ID
                         }
                     },
                     center: {
                         bottomTabs: {
-                            id: 'BottomTabsId',
+                            id: NAVIGATION_IDENTIFIER.BOTTOM_TABS_ID,
                             children: [
                                 {
                                     stack: {
                                         children: [
                                             {
                                                 component: {
-                                                    name: 'FindPlace',
+                                                    name: SCREEN_NAMES.FindPlace,
                                                     options: {
                                                         bottomTab: {
                                                             fontSize: 12,
@@ -59,7 +59,7 @@ export const goToBothPlace = () => {
                                         children: [
                                             {
                                                 component: {
-                                                    name: 'SharePlace',
+                                                    name: SCREEN_NAMES.SharePlace,
                                                     options: {
                                                         bottomTab: {
                                                             text: 'Share Place',
@@ -84,8 +84,8 @@ export const goToBothPlace = () => {
 
 
 Navigation.events().registerNavigationButtonPressedListener((event) => {
-    if (event.buttonId === identifire.SIDE_DRAWER_BUTTON_ID) {
-        Navigation.mergeOptions(identifire.SIDE_DRAWER_ID, {
+    if (event.buttonId === NAVIGATION_IDENTIFIER.SIDE_DRAWER_BUTTON_ID) {
+        Navigation.mergeOptions(NAVIGATION_IDENTIFIER.SIDE_DRAWER_ID, {
             sideMenu: {
                 left: {
                     visible: true

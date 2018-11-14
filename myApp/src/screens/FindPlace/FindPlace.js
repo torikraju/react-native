@@ -6,6 +6,7 @@ import * as identifier from '../../Helper/identifires';
 import {iconsMap} from '../../Helper/iconHelper';
 
 import PlaceList from '../../component/PlaceList/PlaceList';
+import {SCREEN_NAMES, NAVIGATION_IDENTIFIER} from '../../Helper/identifires';
 
 
 class FindPlaceScreen extends Component {
@@ -15,7 +16,7 @@ class FindPlaceScreen extends Component {
         return {
             topBar: {
                 leftButtons: {
-                    id: identifier.SIDE_DRAWER_BUTTON_ID,
+                    id: NAVIGATION_IDENTIFIER.SIDE_DRAWER_BUTTON_ID,
                     icon: iconsMap[identifier.SIDE_DRAWER_ICON]
 
                 },
@@ -33,7 +34,7 @@ class FindPlaceScreen extends Component {
         });
         Navigation.push(this.props.componentId, {
             component: {
-                name: 'PlaceDetails',
+                name: SCREEN_NAMES.PlaceDetail,
                 passProps: {
                     selectedPlace: selectedPlace
                 },

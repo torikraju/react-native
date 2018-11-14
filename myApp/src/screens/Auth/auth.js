@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, Button, TextInput} from 'react-native';
+import {View, Button} from 'react-native';
 
 import {goToBothPlace} from '../../Helper/navigation';
 import {styles} from './auth.style';
 import DefaultInput from '../../component/UI/DefaultInput/DefaultInput';
 import HeadingText from '../../component/UI/HeadingText/HeadingText';
+import MainText from '../../component/UI/MainText/MainText';
 
 
 class AuthScreen extends Component {
@@ -16,7 +17,9 @@ class AuthScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <HeadingText>Please Log In</HeadingText>
+                <MainText>
+                    <HeadingText>Please Log In</HeadingText>
+                </MainText>
                 <Button title='Switch to Login'/>
                 <View style={styles.inputContainer}>
                     <DefaultInput placeholder='Your E-Mail Address' style={styles.input}/>

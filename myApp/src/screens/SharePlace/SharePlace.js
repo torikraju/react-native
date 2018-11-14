@@ -6,6 +6,7 @@ import PlaceInput from '../../component/PlaceInput/PlaceInput';
 import * as actions from '../../store/actions/index';
 import * as identifier from "../../Helper/identifires";
 import {iconsMap} from '../../Helper/iconHelper';
+import {NAVIGATION_IDENTIFIER} from '../../Helper/identifires';
 
 
 class SharePlaceScreen extends Component {
@@ -13,7 +14,7 @@ class SharePlaceScreen extends Component {
         return {
             topBar: {
                 leftButtons: {
-                    id: identifier.SIDE_DRAWER_BUTTON_ID,
+                    id: NAVIGATION_IDENTIFIER.SIDE_DRAWER_BUTTON_ID,
                     icon: iconsMap[identifier.SIDE_DRAWER_ICON]
 
                 },
