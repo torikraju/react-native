@@ -24,5 +24,4 @@ class SideDrawer extends Component {
     }
 }
 
-
 export default SideDrawer;
