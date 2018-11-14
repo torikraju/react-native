@@ -3,6 +3,7 @@ import {View, Text, Button, TextInput} from 'react-native';
 
 import {goToBothPlace} from '../../Helper/navigation';
 import {styles} from './auth.style';
+import DefaultInput from '../../component/UI/DefaultInput/DefaultInput';
 
 
 class AuthScreen extends Component {
@@ -17,9 +18,9 @@ class AuthScreen extends Component {
                 <Text>Please Log In</Text>
                 <Button title='Switch to Login'/>
                 <View style={styles.inputContainer}>
-                    <TextInput placeholder='Your E-Mail Address' style={styles.input}/>
-                    <TextInput placeholder='Password' style={styles.input}/>
-                    <TextInput placeholder='Confirm Password' style={styles.input}/>
+                    <DefaultInput placeholder='Your E-Mail Address'/>
+                    <DefaultInput placeholder='Password'/>
+                    <DefaultInput placeholder='Confirm Password'/>
                 </View>
                 <Button title='Login' onPress={this.loginHandler}/>
             </View>
