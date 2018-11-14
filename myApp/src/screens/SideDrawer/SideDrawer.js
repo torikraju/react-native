@@ -3,6 +3,7 @@ import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import styles from './SideDrawer.style';
+import {ICONS} from '../../Helper/identifires';
 
 class SideDrawer extends Component {
     render() {
@@ -11,7 +12,7 @@ class SideDrawer extends Component {
                 <TouchableOpacity>
                     <View style={styles.drawerIem}>
                         <Icon
-                            name='ios-log-out'
+                            name={ICONS.log_out}
                             size={30} color='#aaa'
                             style={styles.drawerIemIcon}
                         />

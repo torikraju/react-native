@@ -28,7 +28,14 @@ const icons = {
     "ios-chatbubbles": [30, "#bbb"],
     "ios-chatbubbles--active": [30, "#fff"],
 
-    "ios-menu": [30, "#000"],
+    "ios-menu": [30],
+    "md-menu": [30],
+
+    "md-map": [30],
+    "ios-map": [30],
+
+    "md-share-alt": [30],
+    "ios-share-alt": [30],
 
     // Use other Icon provider, see the logic at L39
     "facebook": [30, "#bbb", FontAwesome],

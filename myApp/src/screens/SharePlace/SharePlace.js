@@ -4,9 +4,8 @@ import {connect} from 'react-redux'
 
 import PlaceInput from '../../component/PlaceInput/PlaceInput';
 import * as actions from '../../store/actions/index';
-import * as identifier from "../../Helper/identifires";
 import {iconsMap} from '../../Helper/iconHelper';
-import {NAVIGATION_IDENTIFIER} from '../../Helper/identifires';
+import {NAVIGATION_IDENTIFIER, ICONS} from '../../Helper/identifires';
 import {styles} from './SharePlace.style';
 import MainText from '../../component/UI/MainText/MainText';
 import HeadingText from '../../component/UI/HeadingText/HeadingText';
@@ -31,7 +30,7 @@ class SharePlaceScreen extends Component {
             topBar: {
                 leftButtons: {
                     id: NAVIGATION_IDENTIFIER.SIDE_DRAWER_BUTTON_ID,
-                    icon: iconsMap[identifier.SIDE_DRAWER_ICON]
+                    icon: iconsMap[ICONS.menu]
 
                 },
                 title: {

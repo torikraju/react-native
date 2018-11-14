@@ -1,3 +1,5 @@
+import {Platform} from 'react-native';
+
 export const NAVIGATION_IDENTIFIER = {
     SIDE_DRAWER_ID: 'sideMenu',
     SIDE_DRAWER_BUTTON_ID: 'sideDrawerButton',
@@ -14,4 +16,14 @@ export const SCREEN_NAMES = {
 
 
 // icons
-export const SIDE_DRAWER_ICON = 'ios-menu';
+export const SIDE_DRAWER_ICON = Platform.OS === 'android' ? 'md-menu' : 'ios-menu';
+
+
+export const ICONS = {
+    map_icon: Platform.OS === 'android' ? 'md-map' : 'ios-map',
+    map_share: Platform.OS === 'android' ? 'md-share-alt' : 'ios-share-alt',
+    menu: Platform.OS === 'android' ? 'md-menu' : 'ios-menu',
+    log_out: Platform.OS === 'android' ? 'md-log-out' : 'ios-log-out',
+    trash: Platform.OS === 'android' ? 'md-trash' : 'ios-trash'
+};
+
