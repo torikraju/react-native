@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {Dimensions} from 'react-native';
 
 
 export const styles = StyleSheet.create({
@@ -18,5 +19,12 @@ export const styles = StyleSheet.create({
         width: '100%',
         flex: 1
         // height:'100%'
+    },
+    passwordContainer: {
+        flexDirection: Dimensions.get('window').height > 500 ? 'column' : 'row',
+        justifyContent: 'space-between'
+    },
+    passwordWrapper: {
+        width: Dimensions.get('window').height > 500 ? '100%' : '45%'
     }
 });

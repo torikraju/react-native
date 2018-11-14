@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ImageBackground} from 'react-native';
+import {View, ImageBackground, Dimensions} from 'react-native';
 
 import {goToBothPlace} from '../../Helper/navigation';
 import {styles} from './auth.style';
@@ -17,17 +17,31 @@ class AuthScreen extends Component {
     }
 
     render() {
+        let headingText = null;
+
+        if (Dimensions.get('window').height > 500) {
+            headingText = (
+                <MainText>
+                    <HeadingText>Please Log In</HeadingText>
+                </MainText>
+            );
+        }
+
         return (
             <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
                 <View style={styles.container}>
-                    <MainText>
-                        <HeadingText>Please Log In</HeadingText>
-                    </MainText>
+                    {headingText}
                     <Button color='#29aaf4' onPress={() => alert('ok')}>Switch to Login</Button>
                     <View style={styles.inputContainer}>
                         <DefaultInput placeholder='Your E-Mail Address' style={styles.input}/>
-                        <DefaultInput placeholder='Password' style={styles.input}/>
-                        <DefaultInput placeholder='Confirm Password' style={styles.input}/>
+                        <View style={styles.passwordContainer}>
+                            <View style={styles.passwordWrapper}>
+                                <DefaultInput placeholder='Password' style={styles.input}/>
+                            </View>
+                            <View style={styles.passwordWrapper}>
+                                <DefaultInput placeholder='Confirm Password' style={styles.input}/>
+                            </View>
+                        </View>
                     </View>
                     <Button color='#29aaf4' onPress={this.loginHandler}>Submit</Button>
                 </View>

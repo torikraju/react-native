@@ -15,10 +15,6 @@ export const SCREEN_NAMES = {
 }
 
 
-// icons
-export const SIDE_DRAWER_ICON = Platform.OS === 'android' ? 'md-menu' : 'ios-menu';
-
-
 export const ICONS = {
     map_icon: Platform.OS === 'android' ? 'md-map' : 'ios-map',
     map_share: Platform.OS === 'android' ? 'md-share-alt' : 'ios-share-alt',
