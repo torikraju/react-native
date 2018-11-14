@@ -13,5 +13,10 @@ export const styles = StyleSheet.create({
     input: {
         backgroundColor: '#eee',
         borderColor: '#bbb'
+    },
+    backgroundImage: {
+        width: '100%',
+        flex: 1
+        // height:'100%'
     }
 });
