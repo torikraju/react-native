@@ -28,3 +28,5 @@ export const DIMENSIONS = {
     landscape: 'landscape',
     height: 500
 };
+
+
