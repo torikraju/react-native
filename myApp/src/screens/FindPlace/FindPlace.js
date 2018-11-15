@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet, Animated} from 'react-native';
 import {connect} from 'react-redux';
 import {Navigation} from 'react-native-navigation';
 
@@ -27,13 +27,23 @@ class FindPlaceScreen extends Component {
     }
 
     state = {
-        placesLoaded: false
+        placesLoaded: false,
+        removeAnim: new Animated.Value(1)
     };
 
     placesSearchHandler = () => {
-        this.setState({
-            placesLoaded: true
+        Animated.timing(
+            this.state.removeAnim, {
+                toValue: 0,
+                duration: 500,
+                useNativeDriver: true
+            }
+        ).start(() => {
+            this.setState({
+                placesLoaded: true
+            });
         });
+
     };
 
     itemSelectedHandler = (key) => {
@@ -62,11 +72,23 @@ class FindPlaceScreen extends Component {
     render() {
 
         let content = (
-            <TouchableOpacity onPress={this.placesSearchHandler}>
-                <View style={styles.searchButton}>
-                    <Text style={styles.searchButtonText}>Find Places</Text>
-                </View>
-            </TouchableOpacity>
+            <Animated.View style={{
+                opacity: this.state.removeAnim,
+                transform: [
+                    {
+                        scale: this.state.removeAnim.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [12,1]
+                        })
+                    }
+                ]
+            }}>
+                <TouchableOpacity onPress={this.placesSearchHandler}>
+                    <View style={styles.searchButton}>
+                        <Text style={styles.searchButtonText}>Find Places</Text>
+                    </View>
+                </TouchableOpacity>
+            </Animated.View>
         );
 
         if (this.state.placesLoaded) {
