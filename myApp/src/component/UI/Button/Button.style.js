@@ -7,6 +7,13 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         borderColor: 'black'
+    },
+    disabled: {
+        backgroundColor: '#eee',
+        borderColor: "#aaa"
+    },
+    disabledText: {
+        color: '#aaa'
     }
 });
 

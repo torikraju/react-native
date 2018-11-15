@@ -20,6 +20,7 @@ class AuthScreen extends Component {
             email: {
                 value: '',
                 valid: false,
+                touch: false,
                 validationRules: {
                     isEmail: true
                 }
@@ -27,6 +28,7 @@ class AuthScreen extends Component {
             password: {
                 value: '',
                 valid: false,
+                touch: false,
                 validationRules: {
                     minLength: 6
                 }
@@ -34,6 +36,7 @@ class AuthScreen extends Component {
             confirmPassword: {
                 value: '',
                 valid: false,
+                touch: false,
                 validationRules: {
                     equalTo: 'password'
                 }
@@ -95,7 +98,8 @@ class AuthScreen extends Component {
                     [key]: {
                         ...prevState.controls[key],
                         value: value,
-                        valid: validate(value, prevState.controls[key].validationRules, connectedValue)
+                        valid: validate(value, prevState.controls[key].validationRules, connectedValue),
+                        touch: true
                     }
                 }
             };
@@ -124,6 +128,8 @@ class AuthScreen extends Component {
                             style={styles.input}
                             value={this.state.controls.email.value}
                             onChangeText={(val) => this.updateInputState('email', val)}
+                            valid={this.state.controls.email.valid}
+                            touched={this.state.controls.email.touch}
                         />
                         <View style={this.state.viewMode === DIMENSIONS.portrait
                             ? styles.portraitPasswordContainer
@@ -136,6 +142,8 @@ class AuthScreen extends Component {
                                     style={styles.input}
                                     value={this.state.controls.password.value}
                                     onChangeText={(val) => this.updateInputState('password', val)}
+                                    valid={this.state.controls.password.valid}
+                                    touched={this.state.controls.password.touch}
                                 />
                             </View>
                             <View style={this.state.viewMode === DIMENSIONS.portrait
@@ -146,11 +154,21 @@ class AuthScreen extends Component {
                                     style={styles.input}
                                     value={this.state.controls.confirmPassword.value}
                                     onChangeText={(val) => this.updateInputState('confirmPassword', val)}
+                                    valid={this.state.controls.confirmPassword.valid}
+                                    touched={this.state.controls.confirmPassword.touch}
                                 />
                             </View>
                         </View>
                     </View>
-                    <Button color='#29aaf4' onPress={this.loginHandler}>Submit</Button>
+                    <Button
+                        color='#29aaf4'
+                        onPress={this.loginHandler}
+                        disabled={
+                            !this.state.controls.email.valid ||
+                            !this.state.controls.password.valid ||
+                            !this.state.controls.confirmPassword.valid
+                        }
+                    >Submit</Button>
                 </View>
             </ImageBackground>
         );
