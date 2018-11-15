@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, ImageBackground, Dimensions} from 'react-native';
+import {connect} from 'react-redux';
 
 import {goToBothPlace} from '../../Helper/navigation';
 import {styles} from './auth.style';
@@ -10,6 +11,7 @@ import backgroundImage from '../../assets/background.jpg';
 import Button from '../../component/UI/Button/Button';
 import {DIMENSIONS} from '../../Helper/identifires';
 import validate from '../../utility/validation';
+import {tryAuth} from '../../store/actions/index';
 
 
 class AuthScreen extends Component {
@@ -63,6 +65,12 @@ class AuthScreen extends Component {
 
 
     loginHandler = () => {
+        const authData = {
+            email: this.state.controls.email.value,
+            password: this.state.controls.password.value
+        };
+
+        this.props.onLogin(authData);
         goToBothPlace();
     }
 
@@ -175,5 +183,11 @@ class AuthScreen extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: (authData) => dispatch(tryAuth(authData))
+    };
+};
 
-export default AuthScreen;
+
+export default connect(null, mapDispatchToProps)(AuthScreen);
