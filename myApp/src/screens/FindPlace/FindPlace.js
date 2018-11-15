@@ -31,6 +31,10 @@ class FindPlaceScreen extends Component {
         removeAnim: new Animated.Value(1)
     };
 
+    placesLoadedHandler = () => {
+
+    }
+
     placesSearchHandler = () => {
         Animated.timing(
             this.state.removeAnim, {
@@ -42,6 +46,7 @@ class FindPlaceScreen extends Component {
             this.setState({
                 placesLoaded: true
             });
+            this.placesLoadedHandler();
         });
 
     };
@@ -78,7 +83,7 @@ class FindPlaceScreen extends Component {
                     {
                         scale: this.state.removeAnim.interpolate({
                             inputRange: [0, 1],
-                            outputRange: [12,1]
+                            outputRange: [12, 1]
                         })
                     }
                 ]
