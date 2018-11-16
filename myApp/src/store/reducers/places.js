@@ -1,8 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    places: [],
-    selectedPlace: null
+    places: []
 };
 
 
@@ -16,7 +15,8 @@ const reducer = (state = initialState, action) => {
                     name: action.placeName,
                     image: {
                         uri: 'http://offroadbangladesh.com/wp-content/uploads/2015/02/Amiakum-waterfall-626x365.jpg'
-                    }
+                    },
+                    location: action.location
                 })
             };
         case actionTypes.DELETE_PLACE:
