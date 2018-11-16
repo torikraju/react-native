@@ -62,7 +62,7 @@ class AuthScreen extends Component {
         this.setState({
             viewMode: dimensions.window.height > DIMENSIONS.height ? DIMENSIONS.portrait : DIMENSIONS.landscape
         });
-    }
+    };
 
 
     loginHandler = () => {
