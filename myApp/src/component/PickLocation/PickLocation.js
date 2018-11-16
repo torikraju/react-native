@@ -35,12 +35,29 @@ class PickLocation extends Component {
 
     };
 
+    getLocationHandler = () => {
+        navigator.geolocation.getCurrentPosition(position => {
+                const coordinateEvent = {
+                    nativeEvent: {
+                        coordinate: {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        }
+                    }
+                };
+                this.pickLocationHandler(coordinateEvent);
+            },
+            error => {
+                console.log(error);
+                alert('Fetching the positon failed, please pick one manually')
+            });
+    };
+
     render() {
 
         let marker = null;
 
         if (this.state.locationChosen) {
-            console.log(this.state.focusedLocation);
             marker = <Marker coordinate={this.state.focusedLocation}/>;
         }
 
@@ -55,7 +72,7 @@ class PickLocation extends Component {
                 </MapView>
 
                 <View style={styles.button}>
-                    <Button title='Locate Me' onPress={() => alert('located')}/>
+                    <Button title='Locate Me' onPress={this.getLocationHandler}/>
                 </View>
             </View>
         );
