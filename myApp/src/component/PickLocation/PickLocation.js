@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Button, Text, View} from "react-native";
+import {Button, Text, View, Dimensions} from "react-native";
 import styles from "./PickLocation.style";
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 
 class PickLocation extends Component {
 
@@ -10,11 +10,12 @@ class PickLocation extends Component {
             latitude: 37.78825,
             longitude: -122.4324,
             latitudeDelta: 0.015,
-            longitudeDelta: 0.0121
-        }
+            longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
+        },
+        locationChosen: false
     };
 
-    pickLocationHanlder = event => {
+    pickLocationHandler = event => {
         const coordinate = event.nativeEvent.coordinate;
 
         this.setState(prevState => {
@@ -23,21 +24,32 @@ class PickLocation extends Component {
                     ...prevState.focusedLocation,
                     latitude: coordinate.latitude,
                     longitude: coordinate.longitude
-                }
+                },
+                locationChosen: true
             };
         });
 
     };
 
     render() {
+
+        let marker = null;
+
+        if (this.state.locationChosen) {
+            console.log(this.state.focusedLocation);
+            marker = <Marker coordinate={this.state.focusedLocation}/>;
+        }
+
         return (
             <View style={styles.container}>
                 <MapView
                     initialRegion={this.state.focusedLocation}
                     region={this.state.focusedLocation}
                     style={styles.map}
-                    onPress={this.pickLocationHanlder}
-                />
+                    onPress={this.pickLocationHandler}>
+                    {marker}
+                </MapView>
+
                 <View style={styles.button}>
                     <Button title='Locate Me' onPress={() => alert('located')}/>
                 </View>
