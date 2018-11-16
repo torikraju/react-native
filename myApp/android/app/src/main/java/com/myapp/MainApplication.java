@@ -3,6 +3,7 @@ package com.myapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -40,7 +41,8 @@ public class MainApplication extends NavigationApplication {
           // No need to add RnnPackage and MainReactPackage
           return Arrays.<ReactPackage>asList(
             new VectorIconsPackage(),
-            new MapsPackage()
+            new MapsPackage(),
+            new ImagePickerPackage()
           );
       }
     
