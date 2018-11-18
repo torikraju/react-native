@@ -6,9 +6,21 @@ import {Navigation} from 'react-native-navigation';
 import {iconsMap} from '../../Helper/iconHelper';
 import PlaceList from '../../component/PlaceList/PlaceList';
 import {SCREEN_NAMES, NAVIGATION_IDENTIFIER, ICONS} from '../../Helper/identifires';
-
+import {getPlaces} from '../../store/actions/index';
 
 class FindPlaceScreen extends Component {
+
+
+    constructor(props) {
+        super(props);
+        Navigation.events().bindComponent(this);
+    }
+
+
+    componentDidAppear() {
+        this.props.onLoadPlaces();
+    }
+
 
     static get options() {
         return {
@@ -28,16 +40,25 @@ class FindPlaceScreen extends Component {
 
     state = {
         placesLoaded: false,
-        removeAnim: new Animated.Value(1)
+        removeAnim: new Animated.Value(1),
+        placesAnim: new Animated.Value(0)
     };
 
-    placesLoadedHandler = () => {
+    // componentDidMount() {
+    //     this.props.onLoadPlaces();
+    // }
 
+
+    placesLoadedHandler = () => {
+        Animated.timing(this.state.placesAnim, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true
+        }).start();
     }
 
     placesSearchHandler = () => {
-        Animated.timing(
-            this.state.removeAnim, {
+        Animated.timing(this.state.removeAnim, {
                 toValue: 0,
                 duration: 500,
                 useNativeDriver: true
@@ -133,5 +154,11 @@ const mapStateToProps = state => {
     };
 };
 
+const mapDispatchToProps = dispatch => {
+    return {
+        onLoadPlaces: () => dispatch(getPlaces())
+    };
+};
 
-export default connect(mapStateToProps)(FindPlaceScreen);
+
+export default connect(mapStateToProps, mapDispatchToProps)(FindPlaceScreen);
