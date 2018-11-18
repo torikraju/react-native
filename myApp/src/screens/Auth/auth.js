@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, ImageBackground, Dimensions} from 'react-native';
+import {View, ImageBackground, Dimensions, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 
-import {goToBothPlace} from '../../Helper/navigation';
+
 import {styles} from './auth.style';
 import DefaultInput from '../../component/UI/DefaultInput/DefaultInput';
 import HeadingText from '../../component/UI/HeadingText/HeadingText';
@@ -71,7 +71,7 @@ class AuthScreen extends Component {
             password: this.state.controls.password.value
         };
         this.props.onLogin(authData);
-        goToBothPlace();
+
     }
 
     updateInputState = (key, value) => {
@@ -125,6 +125,21 @@ class AuthScreen extends Component {
     render() {
         let headingText = null;
         let confirmPasswordControl = null;
+        let submitButton = (
+            <Button
+                color='#29aaf4'
+                onPress={this.loginHandler}
+                disabled={
+                    !this.state.controls.confirmPassword.valid && this.state.authMode === 'signup' ||
+                    !this.state.controls.password.valid ||
+                    !this.state.controls.email.valid
+                }
+            >Submit</Button>
+        );
+
+        if (this.props.isLoading) {
+            submitButton = <ActivityIndicator/>
+        }
 
         if (this.state.authMode === 'signup') {
             confirmPasswordControl = (
@@ -151,6 +166,7 @@ class AuthScreen extends Component {
                 </MainText>
             );
         }
+
 
         return (
             <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
@@ -191,20 +207,18 @@ class AuthScreen extends Component {
                             {confirmPasswordControl}
                         </View>
                     </View>
-                    <Button
-                        color='#29aaf4'
-                        onPress={this.loginHandler}
-                        disabled={
-                            !this.state.controls.confirmPassword.valid && this.state.authMode === 'signup' ||
-                            !this.state.controls.password.valid ||
-                            !this.state.controls.email.valid
-                        }
-                    >Submit</Button>
+                    {submitButton}
                 </View>
             </ImageBackground>
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        isLoading: state.ui.isLoading
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -213,4 +227,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(null, mapDispatchToProps)(AuthScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
