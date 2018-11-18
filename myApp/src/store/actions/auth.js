@@ -2,16 +2,17 @@ import * as actionTypes from './actionTypes';
 import {uiStartLoading, uiStopLoading} from './ui';
 import {goToBothPlace} from '../../Helper/navigation';
 
-export const tryAuth = (authData) => {
-    return dispatch => {
-        dispatch(authSignUp(authData));
-    };
-};
-
-export const authSignUp = (authData) => {
+export const tryAuth = (authData, authMode) => {
     return dispatch => {
         dispatch(uiStartLoading());
-        fetch('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyC-8uDz6pEUwIVVPaJ2OCN55Bw-CmYI0rg', {
+        console.log('action-auth', authMode);
+        const apiKey = 'AIzaSyC-8uDz6pEUwIVVPaJ2OCN55Bw-CmYI0rg';
+        let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + apiKey;
+        if (authMode === 'signup') {
+            url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + apiKey;
+        }
+
+        fetch(url, {
             method: 'POST',
             body: JSON.stringify({
                 email: authData.email,
@@ -35,5 +36,6 @@ export const authSignUp = (authData) => {
                 console.log(pasredRes)
                 dispatch(uiStopLoading());
             });
-    }
+
+    };
 };
