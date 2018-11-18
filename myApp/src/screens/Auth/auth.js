@@ -70,7 +70,6 @@ class AuthScreen extends Component {
             email: this.state.controls.email.value,
             password: this.state.controls.password.value
         };
-
         this.props.onLogin(authData);
         goToBothPlace();
     }
@@ -196,10 +195,9 @@ class AuthScreen extends Component {
                         color='#29aaf4'
                         onPress={this.loginHandler}
                         disabled={
-                            // !this.state.controls.confirmPassword.valid && this.state.authMode === 'signup' ||
-                            // !this.state.controls.password.valid ||
-                            // !this.state.controls.email.valid
-                            false
+                            !this.state.controls.confirmPassword.valid && this.state.authMode === 'signup' ||
+                            !this.state.controls.password.valid ||
+                            !this.state.controls.email.valid
                         }
                     >Submit</Button>
                 </View>
