@@ -29,7 +29,7 @@ exports.storeImage = functions.https.onRequest((request, response) => {
             console.log(error);
             return response.status(500).json({error: error});
         });
-        const bucket = gcs.bucket('gs://awesome-places-f47ae.appspot.com');
+        const bucket = gcs.bucket('awesome-places-f47ae.appspot.com');
         const uuid = UUID();
 
         bucket.upload('/tmp/uploaded-image.jpg', {
