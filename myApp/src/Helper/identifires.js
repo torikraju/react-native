@@ -29,4 +29,13 @@ export const DIMENSIONS = {
     height: 500
 };
 
+export const AUTH_MESSAGE = {
+    'EMAIL_NOT_FOUND': 'This email is not registered',
+    'INVALID_PASSWORD': "Password didn't match",
+    'USER_DISABLED': 'This user in disabled',
+    'EMAIL_EXISTS': 'This email is already registered',
+    'OPERATION_NOT_ALLOWED': 'SignUp is disabled',
+    'TOO_MANY_ATTEMPTS_TRY_LATER': 'Too many attempts please trylater'
+};
+
 
