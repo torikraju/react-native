@@ -113,7 +113,7 @@ export const autoSignIn = () => {
     return dispatch => {
         dispatch(authGetToken())
             .then(() => goToBothPlace())
-            .catch((error) => console.log('Failed to fetch token!', error));
+            .catch(() => console.log('Failed to fetch token!'));
     }
 };
 
@@ -127,9 +127,8 @@ export const authClearStorage = () => {
 
 export const authLogout = () => {
     return dispatch => {
-        dispatch(authClearStorage()).then(() => {
-            goToLoginPage();
-        });
+        dispatch(authClearStorage())
+            .then(() => goToLoginPage());
         dispatch(authRemoveToken());
 
     };
