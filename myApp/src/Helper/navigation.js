@@ -4,14 +4,14 @@ import {NAVIGATION_IDENTIFIER, SCREEN_NAMES} from './identifires';
 import {iconsMap} from '../Helper/iconHelper';
 import {ICONS} from '../Helper/identifires';
 
-export const goToFindPlace = () => Navigation.setRoot({
+export const goToLoginPage = () => Navigation.setRoot({
     root: {
         stack: {
             id: 'App',
             children: [
                 {
                     component: {
-                        name: 'FindPlace',
+                        name: 'Login',
                     }
                 }
             ],

@@ -1,9 +1,10 @@
-import {SET_AUTH_TOKEN} from './actionTypes';
+import {AsyncStorage} from 'react-native';
+import {SET_AUTH_TOKEN, AUTH_REMOVE_TOKEN} from './actionTypes';
 import {ToastAndroid} from 'react-native';
 import {uiStartLoading, uiStopLoading} from './ui';
-import {goToBothPlace} from '../../Helper/navigation';
+import {goToBothPlace, goToLoginPage} from '../../Helper/navigation';
 
-import {AUTH_MESSAGE} from '../../Helper/identifires';
+import {AUTH_MESSAGE, LOCAL_ID_TOKEN} from '../../Helper/identifires';
 
 export const tryAuth = (authData, authMode) => {
     return dispatch => {
@@ -43,7 +44,7 @@ export const tryAuth = (authData, authMode) => {
                 } else if (!pasredRes.idToken) {
                     alert('Authentication failed, please try again');
                 } else {
-                    dispatch(setAuthToken(pasredRes.idToken));
+                    dispatch(authStoreToken(pasredRes.idToken, pasredRes.expiresIn));
                     goToBothPlace();
                 }
                 console.log(pasredRes)
@@ -65,11 +66,77 @@ export const authGetToken = () => {
         const promise = new Promise((resolve, reject) => {
             const token = getState().auth.token;
             if (!token) {
-                reject();
+                let fetchedToken;
+                AsyncStorage.getItem(LOCAL_ID_TOKEN)
+                    .catch(() => reject())
+                    .then(tokenFromStorage => {
+                        fetchedToken = tokenFromStorage;
+                        if (!tokenFromStorage) {
+                            reject();
+                        }
+                        return AsyncStorage.getItem('ap:auth:expiryDate')
+                            .then(expiryDate => {
+                                const parseExpiryDate = new Date(parseInt(expiryDate));
+                                const now = new Date();
+                                if (parseExpiryDate > now) {
+                                    dispatch(setAuthToken(tokenFromStorage));
+                                    resolve(fetchedToken);
+                                } else {
+                                    reject();
+                                }
+
+                            })
+                            .catch(() => reject());
+
+                    });
             } else {
                 resolve(token);
             }
         });
         return promise;
+    };
+};
+
+
+export const authStoreToken = (token, expiresIn) => {
+    return dispatch => {
+        dispatch(setAuthToken(token));
+        const now = new Date();
+        const expiryDate = now.getTime() + expiresIn * 1000;
+        AsyncStorage.setItem(LOCAL_ID_TOKEN, token);
+        AsyncStorage.setItem('ap:auth:expiryDate', expiryDate.toString());
+    };
+};
+
+
+export const autoSignIn = () => {
+    return dispatch => {
+        dispatch(authGetToken())
+            .then(() => goToBothPlace())
+            .catch((error) => console.log('Failed to fetch token!', error));
+    }
+};
+
+export const authClearStorage = () => {
+    return dispatch => {
+        AsyncStorage.removeItem("ap:auth:token");
+        AsyncStorage.removeItem("ap:auth:expiryDate");
+        return AsyncStorage.removeItem("ap:auth:refreshToken");
+    };
+};
+
+export const authLogout = () => {
+    return dispatch => {
+        dispatch(authClearStorage()).then(() => {
+            goToLoginPage();
+        });
+        dispatch(authRemoveToken());
+
+    };
+};
+
+export const authRemoveToken = () => {
+    return {
+        type: AUTH_REMOVE_TOKEN
     };
 };

@@ -11,5 +11,5 @@ export function registerScreens() {
     Navigation.registerComponentWithRedux(SCREEN_NAMES.FindPlace, () => require('../screens/FindPlace/FindPlace').default, Provider, store);
     Navigation.registerComponentWithRedux(SCREEN_NAMES.SharePlace, () => require('../screens/SharePlace/SharePlace').default, Provider, store);
     Navigation.registerComponentWithRedux(SCREEN_NAMES.PlaceDetail, () => require('../screens/PlaceDetail/PlaceDetail').default, Provider, store);
-    Navigation.registerComponent(SCREEN_NAMES.SideDrawer, () => require('../screens/SideDrawer/SideDrawer').default);
+    Navigation.registerComponentWithRedux(SCREEN_NAMES.SideDrawer, () => require('../screens/SideDrawer/SideDrawer').default, Provider, store);
 }

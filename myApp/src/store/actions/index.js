@@ -6,7 +6,9 @@ export {
 
 export {
     tryAuth,
-    authGetToken
+    authGetToken,
+    autoSignIn,
+    authLogout
 } from './auth';
 export {
     uiStartLoading,

@@ -38,4 +38,6 @@ export const AUTH_MESSAGE = {
     'TOO_MANY_ATTEMPTS_TRY_LATER': 'Too many attempts please trylater'
 };
 
+export const LOCAL_ID_TOKEN ='ap:auth:token';
+
 
