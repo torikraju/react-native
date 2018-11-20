@@ -16,8 +16,8 @@ export const tryAuth = (authData, authMode) => {
             .then(response => {
                 console.log(response);
                 dispatch(uiStopLoading());
+                dispatch(authStoreToken(response.data.idToken, response.data.expiresIn));
                 goToBothPlace();
-                dispatch(authStoreToken(response.data.idToken));
             })
             .catch(error => {
                 console.log(error.response.data.error.message);
@@ -41,7 +41,7 @@ export const setAuthToken = token => {
     return {
         type: AUTH_SET_TOKEN,
         token: token
-    }
+    };
 };
 
 export const authGetToken = () => {
@@ -49,34 +49,51 @@ export const authGetToken = () => {
         const promise = new Promise((resolve, reject) => {
             const token = getState().auth.token;
             if (!token) {
-                checkForToken(dispatch, reject, resolve);
+                let fetchedToken;
+                AsyncStorage.getItem(local_store.token)
+                    .catch(err => reject())
+                    .then(tokenFormStorage => {
+                        fetchedToken = tokenFormStorage;
+                        if (!tokenFormStorage) {
+                            console.log('localToke', tokenFormStorage);
+                            reject();
+                            return;
+                        }
+                        return AsyncStorage.getItem(local_store.expiryDate);
+                    }).then(expiryDate => {
+                    const parseExpiryDate = new Date(parseInt(expiryDate));
+                    const now = new Date();
+                    if (parseExpiryDate > now) {
+                        dispatch(setAuthToken(fetchedToken));
+                        resolve(fetchedToken);
+                    }
+                    else {
+                        reject();
+                    }
+                }).catch(err => reject());
             } else {
                 resolve(token);
+                dispatch(setAuthToken(token));
             }
         });
         return promise;
     };
 };
-export const authStoreToken = (token) => {
+export const authStoreToken = (token, expiresIn) => {
     return dispatch => {
         dispatch(setAuthToken(token));
+        const now = new Date();
+        const expiryDate = now.getTime() + 10 * 1000;
         AsyncStorage.setItem(local_store.token, token);
+        AsyncStorage.setItem(local_store.expiryDate, expiryDate.toString());
     };
 };
 
 export const autoSignIn = () => {
     return dispatch => {
         dispatch(authGetToken())
-            .catch(() => console.log('Failed to fetch token!'))
-            .then(() => goToBothPlace());
-    };
+            .then(() => goToBothPlace())
+            .catch(() => console.log('Failed to fetch token!'));
+    }
 };
 
-const checkForToken = (dispatch, reject, resolve) => {
-    AsyncStorage.getItem(local_store.token)
-        .catch(() => reject())
-        .then(tokenFromStorage => {
-            dispatch(setAuthToken(tokenFromStorage));
-            resolve(tokenFromStorage);
-        });
-};

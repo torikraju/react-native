@@ -7,7 +7,7 @@ import {styles} from './auth.style';
 import DefaultInput from '../../component/UI/DefaultInput/DefaultInput';
 import HeadingText from '../../component/UI/HeadingText/HeadingText';
 import MainText from '../../component/UI/MainText/MainText';
-import backgroundImage from '../../assets/background.jpg';
+import backgroundImage from '../../assets/background.png';
 import Button from '../../component/UI/Button/Button';
 import {DIMENSIONS} from '../../Helper/identifires';
 import validate from '../../utility/validation';
