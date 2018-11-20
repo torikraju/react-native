@@ -8,6 +8,7 @@
     "android": "cd ./android && gradle app:assembleDebug  && gradle installDebug "
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
     "react-native-image-picker": "^0.27.1",

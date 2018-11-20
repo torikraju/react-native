@@ -38,6 +38,15 @@ export const AUTH_MESSAGE = {
     'TOO_MANY_ATTEMPTS_TRY_LATER': 'Too many attempts please trylater'
 };
 
-export const LOCAL_ID_TOKEN ='ap:auth:token';
+export const local_store = {
+    token: 'ap:auth:token'
+};
 
+export const api_key = 'AIzaSyC-8uDz6pEUwIVVPaJ2OCN55Bw-CmYI0rg';
 
+export const authentication = {
+    login_url: 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + api_key,
+    signUp_url: 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + api_key,
+    place_url: 'https://awesome-places-f47ae.firebaseio.com/places.json?auth=',
+    cloud_storage: 'https://us-central1-awesome-places-f47ae.cloudfunctions.net/storeImage'
+};

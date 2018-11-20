@@ -7,8 +7,7 @@ export {
 export {
     tryAuth,
     authGetToken,
-    autoSignIn,
-    authLogout
+    autoSignIn
 } from './auth';
 export {
     uiStartLoading,
