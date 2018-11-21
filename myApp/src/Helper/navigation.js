@@ -7,14 +7,23 @@ import {ICONS} from '../Helper/identifires';
 export const goToLoginPage = () => Navigation.setRoot({
     root: {
         stack: {
-            id: 'App',
             children: [
                 {
                     component: {
                         name: 'Login',
+                        id: 'login',
+                        options: {
+                            topBar: {
+                                title: {
+                                    text: 'Login',
+                                    animate: true,
+                                    alignment: 'center'
+                                }
+                            }
+                        }
                     }
                 }
-            ],
+            ]
         }
     }
 });
