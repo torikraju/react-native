@@ -40,7 +40,8 @@ export const AUTH_MESSAGE = {
 
 export const local_store = {
     token: 'ap:auth:token',
-    expiryDate: 'ap:auth:expiryDate'
+    expiryDate: 'ap:auth:expiryDate',
+    refreshToken: 'ap:auth:refreshToken'
 };
 
 export const api_key = 'AIzaSyC-8uDz6pEUwIVVPaJ2OCN55Bw-CmYI0rg';

@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 
 import styles from './SideDrawer.style';
 import {ICONS} from '../../Helper/identifires';
-import {} from '../../store/actions/index';
+import {authLogout} from '../../store/actions/index';
 
 class SideDrawer extends Component {
     render() {
         return (
             <View style={[styles.container, {width: Dimensions.get('window').width * 0.8}]}>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={this.props.onLogout}>
                     <View style={styles.drawerIem}>
                         <Icon
                             name={ICONS.log_out}
@@ -29,7 +29,7 @@ class SideDrawer extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        onLogout: () => dispatch(authLogout())
     }
 };
 
