@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     subContainer: {
-        flex: 1
+        flex: 1,
+        marginTop: 10
     }
 });
 

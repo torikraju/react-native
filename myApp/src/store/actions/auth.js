@@ -123,7 +123,7 @@ export const authGetToken = () => {
 export const authStoreToken = (token, expiresIn, refreshToken) => {
     return dispatch => {
         const now = new Date();
-        const expiryDate = now.getTime() + 10 * 1000;
+        const expiryDate = now.getTime() + expiresIn * 1000;
         dispatch(setAuthToken(token, expiryDate));
         AsyncStorage.setItem(local_store.token, token);
         AsyncStorage.setItem(local_store.expiryDate, expiryDate.toString());

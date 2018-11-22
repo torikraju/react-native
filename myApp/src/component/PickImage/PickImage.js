@@ -10,8 +10,14 @@ class PickImage extends Component {
         pickedImaged: null
     };
 
+    reset = () => {
+        this.setState({
+            pickedImaged: null
+        });
+    };
+
     pickImageHandler = () => {
-        ImagePicker.showImagePicker({title: 'Pick an Image'}, response => {
+        ImagePicker.showImagePicker({title: 'Pick an Image', maxHeight: 600, maxWidth: 800}, response => {
             if (response.didCancel) {
                 console.log('User cancelled');
             } else if (response.error) {
@@ -21,7 +27,6 @@ class PickImage extends Component {
                     pickedImaged: {uri: response.uri}
                 });
                 this.props.onImagePicked({uri: response.uri, base64: response.data});
-
             }
         });
     };

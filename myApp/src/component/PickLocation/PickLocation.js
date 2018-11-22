@@ -5,14 +5,20 @@ import MapView, {Marker} from 'react-native-maps';
 
 class PickLocation extends Component {
 
-    state = {
-        focusedLocation: {
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.015,
-            longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
-        },
-        locationChosen: false
+    componentWillMount() {
+        this.reset();
+    }
+
+    reset = () => {
+        this.setState({
+            focusedLocation: {
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.015,
+                longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
+            },
+            locationChosen: false
+        });
     };
 
     pickLocationHandler = event => {
@@ -70,6 +76,7 @@ class PickLocation extends Component {
             <View style={styles.container}>
                 <MapView
                     initialRegion={this.state.focusedLocation}
+                    region={!this.state.locationChosen ? this.state.focusedLocation : null}
                     style={styles.map}
                     onPress={this.pickLocationHandler}
                     ref={ref => this.map = ref}>

@@ -12,31 +12,40 @@ import HeadingText from '../../component/UI/HeadingText/HeadingText';
 import PickImage from "../../component/PickImage/PickImage";
 import PickLocation from "../../component/PickLocation/PickLocation";
 import validate from '../../utility/validation';
+import {Navigation} from "react-native-navigation";
 
 
 class SharePlaceScreen extends Component {
 
-    state = {
-        placeName: '',
-        controls: {
-            placeName: {
-                value: "",
-                valid: false,
-                touched: false,
-                validationRules: {
-                    notEmpty: true
+
+    reset = () => {
+        this.setState({
+            placeName: '',
+            controls: {
+                placeName: {
+                    value: "",
+                    valid: false,
+                    touched: false,
+                    validationRules: {
+                        notEmpty: true
+                    }
+                },
+                location: {
+                    value: null,
+                    valid: false
+                },
+                image: {
+                    value: null,
+                    valid: false
                 }
-            },
-            location: {
-                value: null,
-                valid: false
-            },
-            image: {
-                value: null,
-                valid: false
             }
-        }
+        });
+    };
+
+    componentWillMount() {
+        this.reset();
     }
+
 
     placeNameChangedHandler = val => {
         this.setState(prevState => {
@@ -76,18 +85,9 @@ class SharePlaceScreen extends Component {
             this.state.controls.location.value,
             this.state.controls.image.value
         );
-        //optional make placeName value to empty
-        this.setState(prevState => {
-            return {
-                controls: {
-                    ...prevState.controls,
-                    placeName: {
-                        ...prevState.controls.placeName,
-                        value: ''
-                    }
-                }
-            };
-        });
+        this.reset();
+        this.imagePicker.reset();
+        this.locationPicker.reset();
     };
 
     locationPickedHandler = location => {
@@ -144,8 +144,8 @@ class SharePlaceScreen extends Component {
                     <MainText>
                         <HeadingText>Share a place with us!</HeadingText>
                     </MainText>
-                    <PickImage onImagePicked={this.imagePickedHandler}/>
-                    <PickLocation onLocationPick={this.locationPickedHandler}/>
+                    <PickImage onImagePicked={this.imagePickedHandler} ref={ref => this.imagePicker = ref}/>
+                    <PickLocation onLocationPick={this.locationPickedHandler} ref={ref => this.locationPicker = ref}/>
                     <PlaceInput
                         placeName={this.state.controls.placeName.value}
                         onChangeText={this.placeNameChangedHandler}/>
