@@ -63,7 +63,8 @@ exports.storeImage = functions.https.onRequest((request, response) => {
                                 '/o/' +
                                 encodeURIComponent(file.name) +
                                 '?alt=media&token=' +
-                                uuid
+                                uuid,
+                            imagePath: '/places/' + uuid + '.jpg'
                         });
                     } else {
                         console.log(error);
@@ -77,3 +78,14 @@ exports.storeImage = functions.https.onRequest((request, response) => {
     });
 
 });
+
+
+exports.deleteImage = functions.database
+    .ref("/places/{placeId}")
+    .onDelete((snapshot, context) => {
+        const imagePath = snapshot.val().imagePath;
+        const bucket = gcs.bucket('awesome-places-f47ae.appspot.com');
+        return bucket.file(imagePath).delete();
+    });
+
+
