@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    places: []
+    places: [],
+    placeAdded: false
 };
 
 
@@ -18,6 +19,16 @@ const reducer = (state = initialState, action) => {
                 places: state.places.filter(place => {
                     return place.key !== action.key;
                 })
+            };
+        case actionTypes.PLACE_ADDED:
+            return {
+                ...state,
+                placeAdded: true
+            };
+        case actionTypes.START_ADD_PLACE:
+            return {
+                ...state,
+                placeAdded: false
             };
         default:
             return state;

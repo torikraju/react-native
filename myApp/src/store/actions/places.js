@@ -33,7 +33,10 @@ export const addPlace = (placeName, location, image) => {
                     body: JSON.stringify(placeData)
                 })
                     .then(response => response.json())
-                    .then(() => dispatch(uiStopLoading()))
+                    .then(() => {
+                        dispatch(uiStopLoading());
+                        dispatch(placeAdded());
+                    })
                     .catch(() => addPlaceCatchError(dispatch));
             })
             .catch(() => addPlaceCatchError(dispatch));
@@ -56,6 +59,18 @@ export const setPlaces = (places) => {
     return {
         type: actionTypes.SET_PLACES,
         places: places
+    };
+};
+
+export const placeAdded = () => {
+    return {
+        type: actionTypes.PLACE_ADDED
+    };
+};
+
+export const startAddPlace = () => {
+    return {
+        type: actionTypes.START_ADD_PLACE
     };
 };
 

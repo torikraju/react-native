@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput, Button, ScrollView, Image, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux'
+import {Navigation} from "react-native-navigation";
 
 import PlaceInput from '../../component/PlaceInput/PlaceInput';
 import * as actions from '../../store/actions/index';
@@ -12,10 +13,14 @@ import HeadingText from '../../component/UI/HeadingText/HeadingText';
 import PickImage from "../../component/PickImage/PickImage";
 import PickLocation from "../../component/PickLocation/PickLocation";
 import validate from '../../utility/validation';
-import {Navigation} from "react-native-navigation";
 
 
 class SharePlaceScreen extends Component {
+
+    constructor(props) {
+        super(props);
+        Navigation.events().bindComponent(this);
+    }
 
 
     reset = () => {
@@ -44,6 +49,21 @@ class SharePlaceScreen extends Component {
 
     componentWillMount() {
         this.reset();
+    }
+
+    componentDidUpdate() {
+        if (this.props.placeAdded) {
+            Navigation.mergeOptions(this.props.componentId, {
+                bottomTabs: {
+                    currentTabIndex: 0
+                }
+            })
+
+        }
+    }
+
+    componentDidAppear() {
+        this.props.onStartAddPlace();
     }
 
 
@@ -161,14 +181,16 @@ class SharePlaceScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.ui.isLoading
+        isLoading: state.ui.isLoading,
+        placeAdded: state.places.placeAdded
     };
 };
 
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddPlace: (placeName, location, image) => dispatch(actions.addPlace(placeName, location, image))
+        onAddPlace: (placeName, location, image) => dispatch(actions.addPlace(placeName, location, image)),
+        onStartAddPlace: () => dispatch(actions.startAddPlace())
     };
 };
 
