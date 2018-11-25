@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import axios from 'axios';
 import {SkypeIndicator} from 'react-native-indicators';
 
@@ -46,10 +46,9 @@ class AlbumList extends Component {
             lists = this.renderAlbums();
         }
         return (
-            <View>
+            <ScrollView>
                 {lists}
-
-            </View>
+            </ScrollView>
         );
     }
 }
