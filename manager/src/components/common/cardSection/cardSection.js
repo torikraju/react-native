@@ -5,7 +5,7 @@ import {styles} from './cardSection.style';
 
 export const CardSection = props => {
     return (
-        <View style={styles.containerStyle}>
+        <View style={[styles.containerStyle, props.style]}>
             {props.children}
         </View>
     );

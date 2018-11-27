@@ -4,3 +4,7 @@ export {
     loginUser
 } from './auth';
 
+export {
+    employeeUpdate
+} from './createEmployee';
+
