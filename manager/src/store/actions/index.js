@@ -1,8 +1,6 @@
-// export {
-//     addPlace,
-//     deletePlace,
-//     getPlaces,
-//     placeAdded,
-//     startAddPlace
-// } from './places';
+export {
+    emailChanged,
+    passwordChanged,
+    loginUser
+} from './auth';
 

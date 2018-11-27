@@ -7,6 +7,7 @@ import firebase from 'firebase';
 import {FIREBASE_DATA} from './helper/Data';
 import configureStore from './store/configureStore';
 import LoginForm from './components/loginForm/LoginForm';
+import {Header} from './components/common/index';
 
 
 class App extends Component {
@@ -18,7 +19,10 @@ class App extends Component {
     render() {
         return (
             <Provider store={configureStore()}>
-                <LoginForm/>
+                <View>
+                    <Header headerText='Login'/>
+                    <LoginForm/>
+                </View>
             </Provider>
 
         );
