@@ -4,20 +4,28 @@ import {connect} from 'react-redux';
 
 import {styles} from './LoginForm.style';
 import {Card, CardSection, Input, Button, Spinner} from '../common/index';
-import {emailChanged, passwordChanged, loginUser} from '../../store/actions/index';
+import {loginUser, autoSignIn} from '../../store/actions/index';
 
 class LoginForm extends Component {
 
+    state = {
+        email: '',
+        password: ''
+    };
+
+    componentDidMount() {
+        this.props.onAutoSignIn();
+    }
+
+
     onInputChange = (key, value) => {
-        if (key === 'email') {
-            this.props.onEmailChanged(value)
-        } else {
-            this.props.onPasswordChanged(value);
-        }
+        this.setState(prevState => {
+            return {...prevState, [key]: value};
+        })
     };
 
     loginHandler = () => {
-        this.props.onLoginUser(this.props);
+        this.props.onLoginUser(this.state);
     };
 
     renderButton = () => {
@@ -43,7 +51,7 @@ class LoginForm extends Component {
                 <CardSection>
                     <Input
                         label='Email'
-                        value={this.props.email}
+                        value={this.state.email}
                         placeholder='email@email.com'
                         onChangeText={(val) => this.onInputChange('email', val)}
                     />
@@ -53,6 +61,7 @@ class LoginForm extends Component {
                         label='Password'
                         placeholder='password'
                         secureTextEntry={true}
+                        value={this.state.password}
                         onChangeText={(val) => this.onInputChange('password', val)}
                     />
                 </CardSection>
@@ -66,10 +75,8 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = state => {
-    const {email, password, error, loading} = state.auth;
+    const {error, loading} = state.auth;
     return {
-        email: email,
-        password: password,
         error: error,
         loading: loading
     };
@@ -77,9 +84,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onEmailChanged: (text) => dispatch(emailChanged(text)),
-        onPasswordChanged: (text) => dispatch(passwordChanged(text)),
         onLoginUser: (props) => dispatch(loginUser(props)),
+        onAutoSignIn: () => dispatch(autoSignIn())
     };
 };
 

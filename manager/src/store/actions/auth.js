@@ -1,9 +1,10 @@
-import firebase from 'firebase';
+import {AsyncStorage} from 'react-native';
+import axios from 'axios';
 import {Actions} from 'react-native-router-flux';
 
+import {authentication, local_store} from '../../helper/identifires';
+
 import {
-    EMAIL_CHANGED,
-    PASSWORD_CHANGED,
     STOP_LOADING,
     START_LOADING,
     LOGIN_USER_SUCCESS,
@@ -23,10 +24,10 @@ const stopLoading = () => {
     };
 };
 
-const loginUserSuccess = user => {
+const loginUserSuccess = (token, expiryDate) => {
     return {
         type: LOGIN_USER_SUCCESS,
-        payload: user
+        payload: {token, expiryDate}
     };
 };
 
@@ -44,9 +45,10 @@ const resetAuthError = () => {
 };
 
 const onLoginSuccess = (dispatch, response) => {
-    console.log(response);
     dispatch(stopLoading());
-    dispatch(loginUserSuccess(response));
+    const expiryDate = new Date().getTime() + 3600 * 1000;
+    dispatch(loginUserSuccess(response.data.idToken, expiryDate));
+    dispatch(storeAuthToken(response.data.idToken, expiryDate, response.data.localId));
     Actions.main();
 };
 
@@ -56,31 +58,89 @@ const onLoginFailed = (dispatch, error) => {
     dispatch(setAuthError('Authentication failed'));
 };
 
-export const emailChanged = text => {
-    return {
-        type: EMAIL_CHANGED,
-        payload: text
-    }
-};
-
-export const passwordChanged = text => {
-    return {
-        type: PASSWORD_CHANGED,
-        payload: text
-    }
-};
-
 export const loginUser = ({email, password}) => {
     return dispatch => {
         dispatch(resetAuthError());
         dispatch(startLoading());
-        firebase.auth().signInWithEmailAndPassword(email, password)
+        axios.post(authentication.login_url, {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        })
             .then(response => onLoginSuccess(dispatch, response))
-            .catch((error) => {
+            .catch(error => {
                 console.log(error);
-                firebase.auth().createUserWithEmailAndPassword(email, password)
+                axios.post(authentication.signUp_url, {email: email, password: password})
                     .then(response => onLoginSuccess(dispatch, response))
-                    .catch((error) => onLoginFailed(dispatch, error));
+                    .catch(error => onLoginFailed(dispatch, error))
             });
     };
 };
+
+export const authGetToken = () => {
+    return (dispatch, getState) => {
+        const promise = new Promise((resolve, reject) => {
+            const token = getState().auth.token;
+            const expiryDate = getState().auth.expiryDate;
+            if (!token || new Date(expiryDate) <= new Date()) {
+                AsyncStorage.getItem(local_store.token)
+                    .catch(() => reject())
+                    .then(tokenFromStorage => {
+                        if (!tokenFromStorage) {
+                            reject();
+                            return;
+                        }
+                        AsyncStorage.getItem(local_store.expiryDate)
+                            .then(expiryDate => {
+                                const parsedExpiryDate = new Date(parseInt(expiryDate));
+                                const now = new Date();
+                                if (parsedExpiryDate > now) {
+                                    dispatch(loginUserSuccess(tokenFromStorage, expiryDate));
+                                    resolve(tokenFromStorage);
+                                } else {
+                                    reject();
+                                }
+                            })
+                            .catch(() => reject());
+                    });
+            } else {
+                resolve(token);
+            }
+        });
+        return promise;
+    };
+};
+
+export const getUserId = () => {
+    return async () => {
+        try {
+            const value = await AsyncStorage.getItem('TASKS');
+            if (value !== null) {
+                // We have data!!
+                console.log(value);
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
+};
+
+const storeAuthToken = (token, expiryDate, userId) => {
+    return () => {
+        AsyncStorage.setItem(local_store.token, token);
+        AsyncStorage.setItem(local_store.expiryDate, expiryDate.toString());
+        AsyncStorage.setItem(local_store.userId, userId);
+    }
+};
+
+export const autoSignIn = () => {
+    return dispatch => {
+        dispatch(authGetToken())
+            .then(() => Actions.main())
+            .catch((error) => console.log('Failed to fetch token! autoSignIn', error));
+    }
+};
+
+
+
+

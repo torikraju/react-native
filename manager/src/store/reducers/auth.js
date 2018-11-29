@@ -1,6 +1,4 @@
 import {
-    EMAIL_CHANGED,
-    PASSWORD_CHANGED,
     START_LOADING,
     STOP_LOADING,
     LOGIN_USER_SUCCESS,
@@ -10,18 +8,11 @@ import {
 import {updateObject} from '../../helper/uitility';
 
 const initialState = {
-    email: '',
-    password: '',
     loading: false,
     error: '',
-    user: null
-};
-
-const emailChanged = (state, action) => {
-    return updateObject(state, {email: action.payload});
-};
-const passwordChanged = (state, action) => {
-    return updateObject(state, {password: action.payload});
+    user: null,
+    token: null,
+    expiryDate: null
 };
 
 const startLoading = (state) => {
@@ -33,7 +24,10 @@ const stopLoading = (state) => {
 };
 
 const loginUserSuccess = (state, action) => {
-    return updateObject(state, {user: action.payload})
+    return updateObject(state, {
+        token: action.payload.token,
+        expiryDate: action.payload.expiryDate
+    });
 };
 
 const setAuthError = (state, action) => {
@@ -46,10 +40,6 @@ const resetAuthError = (state) => {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case EMAIL_CHANGED:
-            return emailChanged(state, action);
-        case PASSWORD_CHANGED:
-            return passwordChanged(state, action);
         case START_LOADING:
             return startLoading(state);
         case STOP_LOADING:
