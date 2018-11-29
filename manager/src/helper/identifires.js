@@ -53,3 +53,7 @@ export const authentication = {
     place_url: 'https://awesome-places-f47ae.firebaseio.com/places.json?auth=',
     cloud_storage: 'https://us-central1-awesome-places-f47ae.cloudfunctions.net/storeImage'
 };
+
+export const url={
+    db_url:'https://manager-eb77b.firebaseio.com/users'
+}

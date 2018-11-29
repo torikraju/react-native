@@ -1,9 +1,8 @@
-import {AsyncStorage} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 
-import {getUserId, authGetToken} from './auth';
-import {local_store} from '../../helper/identifires';
+import {authGetToken} from './auth';
+import {url} from '../../helper/identifires';
 
 
 import {
@@ -33,27 +32,29 @@ export const setEmployees = (employees) => {
     };
 };
 
+const gotoEmployeeList = dispatch => {
+    dispatch(resetEmployeeForm());
+    Actions.employeeList({type: 'reset'});
+};
+
+const getFromData = (name, phone, shift) => {
+    return {
+        name: name,
+        phone: phone,
+        shift: shift
+    }
+};
+
 
 export const employeeCreate = ({name, phone, shift}) => {
     return dispatch => {
         dispatch(authGetToken())
-            .then(token => {
-                let id;
-                AsyncStorage.getItem(local_store.userId)
-                    .then(response => {
-                        id = response;
-                        axios.post(`https://manager-eb77b.firebaseio.com/users/${id}/employee.json?auth=${token}`, {
-                            name: name,
-                            phone: phone,
-                            shift: shift
-                        }).then(() => {
-                            dispatch(resetEmployeeForm());
-                            Actions.employeeList({type: 'reset'});
-                        }).catch((error) => console.log(error));
-                    })
-                    .catch(() => console.log('error'));
+            .then(response => {
+                axios.post(`${url.db_url}/${response.uid}/employee.json?auth=${response.token}`, getFromData(name, phone, shift))
+                    .then(() => gotoEmployeeList(dispatch))
+                    .catch(error => console.log(error));
             })
-            .catch((error) => console.log('failed to fetch token when saving new employee', error))
+            .catch((error) => console.log('failed to fetch token and uid form localStorage while creating employee', error))
     };
 };
 
@@ -61,20 +62,12 @@ export const employeeCreate = ({name, phone, shift}) => {
 export const fetchEmployees = () => {
     return dispatch => {
         dispatch(authGetToken())
-            .then(token => {
-                let id;
-                AsyncStorage.getItem(local_store.userId)
-                    .then(response => {
-                        id = response;
-                        axios.get(`https://manager-eb77b.firebaseio.com/users/${id}/employee.json?auth=${token}`)
-                            .then((response) => {
-                                console.log(response);
-                                dispatch(setEmployees(convertPlaceToArray(response.data)));
-                            }).catch((error) => console.log(error));
-                    })
-                    .catch(() => console.log('error'));
+            .then(response => {
+                axios.get(`${url.db_url}/${response.uid}/employee.json?auth=${response.token}`)
+                    .then(response => dispatch(setEmployees(convertPlaceToArray(response.data))))
+                    .catch(error => console.log(error));
             })
-            .catch((error) => console.log('failed to fetch token when saving new employee', error))
+            .catch((error) => console.log('failed to fetch token and uid form localStorage while fetching employee', error))
     };
 };
 
@@ -82,48 +75,23 @@ export const employeeUpdate = ({name, phone, shift, uid}) => {
     return dispatch => {
         console.log(name, phone, shift, uid);
         dispatch(authGetToken())
-            .then(token => {
-                let id;
-                AsyncStorage.getItem(local_store.userId)
-                    .then(response => {
-                        id = response;
-                        let data = {
-                            name: name,
-                            phone: phone,
-                            shift: shift
-                        };
-                        console.log(data);
-                        axios.put(`https://manager-eb77b.firebaseio.com/users/${id}/employee/${uid}.json/?auth=${token}`, data)
-                            .then((response) => {
-                                dispatch(resetEmployeeForm());
-                                console.log(response);
-                                Actions.employeeList({type: 'reset'});
-                            }).catch((error) => console.log(error));
-                    })
-                    .catch(() => console.log('error'));
-            })
-            .catch((error) => console.log('failed to fetch token when saving new employee', error))
+            .then(response => {
+                axios.put(`${url.db_url}/${response.uid}/employee/${uid}.json/?auth=${response.token}`, getFromData(name, phone, shift))
+                    .then(() => gotoEmployeeList(dispatch))
+                    .catch((error) => console.log(error));
+            }).catch((error) => console.log('failed to fetch token and uid form localStorage while updating employee', error))
     };
 };
 
 export const employeeDelete = ({uid}) => {
     return dispatch => {
         dispatch(authGetToken())
-            .then(token => {
-                let id;
-                AsyncStorage.getItem(local_store.userId)
-                    .then(response => {
-                        id = response;
-                        axios.delete(`https://manager-eb77b.firebaseio.com/users/${id}/employee/${uid}.json/?auth=${token}`)
-                            .then((response) => {
-                                dispatch(resetEmployeeForm());
-                                console.log(response);
-                                Actions.employeeList({type: 'reset'});
-                            }).catch((error) => console.log(error));
-                    }).catch(() => console.log('failed to delete a employee'));
-            }).catch((error) => console.log('failed to fetch token when saving new employee', error))
+            .then(response => {
+                axios.delete(`${url.db_url}/${response.uid}/employee/${uid}.json/?auth=${response.token}`)
+                    .then(() => Actions.employeeList({type: 'reset'}))
+                    .catch((error) => console.log(error));
+            }).catch((error) => console.log('failed to fetch token and uid form localStorage while deleting employee', error))
     };
-
 };
 
 

@@ -82,46 +82,36 @@ export const authGetToken = () => {
         const promise = new Promise((resolve, reject) => {
             const token = getState().auth.token;
             const expiryDate = getState().auth.expiryDate;
-            if (!token || new Date(expiryDate) <= new Date()) {
-                AsyncStorage.getItem(local_store.token)
-                    .catch(() => reject())
-                    .then(tokenFromStorage => {
-                        if (!tokenFromStorage) {
-                            reject();
-                            return;
-                        }
-                        AsyncStorage.getItem(local_store.expiryDate)
-                            .then(expiryDate => {
-                                const parsedExpiryDate = new Date(parseInt(expiryDate));
-                                const now = new Date();
-                                if (parsedExpiryDate > now) {
-                                    dispatch(loginUserSuccess(tokenFromStorage, expiryDate));
-                                    resolve(tokenFromStorage);
-                                } else {
+            AsyncStorage.getItem(local_store.userId)
+                .catch(() => reject())
+                .then(localUserId => {
+                    if (!token || new Date(expiryDate) <= new Date()) {
+                        AsyncStorage.getItem(local_store.token)
+                            .catch(() => reject())
+                            .then(tokenFromStorage => {
+                                if (!tokenFromStorage) {
                                     reject();
+                                    return;
                                 }
-                            })
-                            .catch(() => reject());
-                    });
-            } else {
-                resolve(token);
-            }
+                                AsyncStorage.getItem(local_store.expiryDate)
+                                    .then(expiryDate => {
+                                        const parsedExpiryDate = new Date(parseInt(expiryDate));
+                                        const now = new Date();
+                                        if (parsedExpiryDate > now) {
+                                            dispatch(loginUserSuccess(tokenFromStorage, expiryDate));
+                                            resolve({token: tokenFromStorage, uid: localUserId});
+                                        } else {
+                                            reject();
+                                        }
+                                    })
+                                    .catch(() => reject());
+                            });
+                    } else {
+                        resolve({token: token, uid: localUserId});
+                    }
+                });
         });
         return promise;
-    };
-};
-
-export const getUserId = () => {
-    return async () => {
-        try {
-            const value = await AsyncStorage.getItem('TASKS');
-            if (value !== null) {
-                // We have data!!
-                console.log(value);
-            }
-        } catch (error) {
-            // Error retrieving data
-        }
     };
 };
 
