@@ -54,7 +54,7 @@ export const employeeCreate = ({name, phone, shift}) => {
                     .then(() => gotoEmployeeList(dispatch))
                     .catch(error => console.log(error));
             })
-            .catch((error) => console.log('failed to fetch token and uid form localStorage while creating employee', error))
+            .catch(error => console.log('failed to fetch token and uid form localStorage while creating employee', error))
     };
 };
 
@@ -67,7 +67,7 @@ export const fetchEmployees = () => {
                     .then(response => dispatch(setEmployees(convertPlaceToArray(response.data))))
                     .catch(error => console.log(error));
             })
-            .catch((error) => console.log('failed to fetch token and uid form localStorage while fetching employee', error))
+            .catch(error => console.log('failed to fetch token and uid form localStorage while fetching employee', error))
     };
 };
 
@@ -78,8 +78,8 @@ export const employeeUpdate = ({name, phone, shift, uid}) => {
             .then(response => {
                 axios.put(`${url.db_url}/${response.uid}/employee/${uid}.json/?auth=${response.token}`, getFromData(name, phone, shift))
                     .then(() => gotoEmployeeList(dispatch))
-                    .catch((error) => console.log(error));
-            }).catch((error) => console.log('failed to fetch token and uid form localStorage while updating employee', error))
+                    .catch(error => console.log(error));
+            }).catch(error => console.log('failed to fetch token and uid form localStorage while updating employee', error))
     };
 };
 
@@ -89,8 +89,8 @@ export const employeeDelete = ({uid}) => {
             .then(response => {
                 axios.delete(`${url.db_url}/${response.uid}/employee/${uid}.json/?auth=${response.token}`)
                     .then(() => Actions.employeeList({type: 'reset'}))
-                    .catch((error) => console.log(error));
-            }).catch((error) => console.log('failed to fetch token and uid form localStorage while deleting employee', error))
+                    .catch(error => console.log(error));
+            }).catch(error => console.log('failed to fetch token and uid form localStorage while deleting employee', error))
     };
 };
 

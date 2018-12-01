@@ -1,12 +1,33 @@
 import React, {Component} from 'react';
-import {Picker, View} from 'react-native';
+import {View, TouchableOpacity, Text} from 'react-native';
 import {connect} from 'react-redux';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import {CardSection, Input} from "../common/index";
 import {inputHandler} from '../../store/actions/index';
+import {AppUtil} from "../../helper/AppUtil";
+import {styles} from './EmployeeFrom.style';
 
 class EmployeeFrom extends Component {
+
+    state = {
+        isDateTimePickerVisible: false
+    };
+
+    showDateTimePicker = () => this.setState({
+        isDateTimePickerVisible: true
+    });
+
+    hideDateTimePicker = () => this.setState({isDateTimePickerVisible: false});
+
+    handleDatePicked = (date) => {
+        let value = AppUtil.convertDate(date);
+        this.props.onInputHandler({prop: 'shift', value});
+        this.hideDateTimePicker();
+    };
+
     render() {
+        const {pickerContainerStyle, buttonStyle, buttonTextStyle, textStyle} = styles;
         return (
             <View>
                 <CardSection>
@@ -16,7 +37,6 @@ class EmployeeFrom extends Component {
                         value={this.props.name}
                         onChangeText={value => this.props.onInputHandler({prop: 'name', value})}/>
                 </CardSection>
-
                 <CardSection>
                     <Input
                         label='Phone'
@@ -24,20 +44,21 @@ class EmployeeFrom extends Component {
                         value={this.props.phone}
                         onChangeText={value => this.props.onInputHandler({prop: 'phone', value})}/>
                 </CardSection>
-
                 <CardSection>
-                    <Picker
-                        selectedValue={this.props.shift}
-                        style={{height: 50, width: 100, flex: 1}}
-                        onValueChange={(value) => this.props.onInputHandler({prop: 'shift', value})}>
-                        <Picker.Item label="Sunday" value="sunday"/>
-                        <Picker.Item label="Monday" value="monday"/>
-                        <Picker.Item label="Tuesday" value="tuesday"/>
-                        <Picker.Item label="Wednesday" value="wednesday"/>
-                        <Picker.Item label="Thursday" value="thursday"/>
-                        <Picker.Item label="Friday" value="friday"/>
-                        <Picker.Item label="Saturday" value="saturday"/>
-                    </Picker>
+                    <View style={pickerContainerStyle}>
+                        <TouchableOpacity onPress={this.showDateTimePicker}>
+                            <View style={buttonStyle}>
+                                <Text style={buttonTextStyle}>Select Shift</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <Text style={textStyle}>{this.props.shift}</Text>
+                        <DateTimePicker
+                            isVisible={this.state.isDateTimePickerVisible}
+                            onConfirm={this.handleDatePicked}
+                            onCancel={this.hideDateTimePicker}
+                            mode='date'
+                        />
+                    </View>
                 </CardSection>
 
 
